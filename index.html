@@ -284,35 +284,8 @@ ${top5Text}
 --------------------------------
     `.trim();
     
-    // Create a temporary textarea element to handle copying
-    const textarea = document.createElement('textarea');
-    textarea.value = resultText;
-    textarea.setAttribute('readonly', '');
-    textarea.style.position = 'absolute';
-    textarea.style.left = '-9999px';
-    document.body.appendChild(textarea);
-    
-    // Select the text
-    const selected = document.getSelection().rangeCount > 0 
-        ? document.getSelection().getRangeAt(0) 
-        : false;
-    textarea.select();
-    
-    try {
-        // Execute copy command
-        document.execCommand('copy');
-        alert('คัดลอกผลลัพธ์แล้ว!');
-    } catch (err) {
-        console.error('Failed to copy text: ', err);
-        alert('ไม่สามารถคัดลอกได้โดยอัตโนมัติ กรุณาแคปหน้าจอแทนครับ');
-    }
-    
-    // Cleanup
-    document.body.removeChild(textarea);
-    if (selected) {
-        document.getSelection().removeAllRanges();
-        document.getSelection().addRange(selected);
-    }
+    navigator.clipboard.writeText(resultText);
+    alert('คัดลอกผลลัพธ์แล้ว!');
   };
 
   const totalQuestions = 68; // 34 themes * 2 questions
